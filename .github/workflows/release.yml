@@ -11,4 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: cli/gh-extension-precompile@v1
+      - uses: cli/gh-extension-precompile@v1.1.1 # TODO update once https://github.com/cli/gh-extension-precompile/pull/3 is merged
+        with:
+          platforms: "darwin-amd64,darwin-arm64,linux-386,linux-arm,linux-amd64,linux-arm64,windows-386,windows-amd64"
