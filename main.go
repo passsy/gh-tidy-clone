@@ -5,6 +5,7 @@ import (
 	"os"
 	"regexp"
 	"github.com/go-git/go-git/v5"
+	"strings"
 )
 
 // Clones the repo in ~/Project/github/{org}/{repo}
@@ -13,7 +14,10 @@ func main() {
 		fmt.Print("missing argument\n")
 		os.Exit(1)
 	}
-	origin := os.Args[1]
+	var origin = os.Args[1]
+	if !strings.HasSuffix(origin, ".git") {
+		origin = fmt.Sprintf("%s.git", origin)
+	}
 	repoRegex := regexp.MustCompile("\\W*(\\w+)\\/(\\w+).git")
 	matches := repoRegex.FindStringSubmatch(origin)
 	org := matches[1]
