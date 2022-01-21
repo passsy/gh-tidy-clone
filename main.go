@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"github.com/go-git/go-git/v5"
 	"strings"
+
+	"github.com/cli/go-gh"
 )
 
 // Clones the repo in ~/Project/github/{org}/{repo}
@@ -27,16 +28,11 @@ func main() {
 	repoPath := fmt.Sprintf("%s/Projects/github/%s/%s", home, org, repoName)
 
 	fmt.Printf("Cloning repo %s into %s\n", origin, repoPath)
-	_, err := git.PlainClone(repoPath, false, &git.CloneOptions{
-		URL:      origin,
-		Progress: os.Stdout,
-	})
+	stdOut, _, err := gh.Exec("repo", "clone", fmt.Sprintf("%s/%s", org, repoName), repoPath)
 	if err != nil {
-		if os.IsNotExist(err) {
-			fmt.Printf("Error: Already cloned\n")
-			fmt.Printf("cd %s\n", repoPath)
-			os.Exit(1)
-		}
+		fmt.Println(err)
+		return
 	}
+	fmt.Println(stdOut.String())
 	fmt.Printf("cd %s\n", repoPath)
 }
