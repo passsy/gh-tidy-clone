@@ -19,10 +19,12 @@ func main() {
 	if !strings.HasSuffix(origin, ".git") {
 		origin = fmt.Sprintf("%s.git", origin)
 	}
-	repoRegex := regexp.MustCompile("\\W*(\\w+)\\/(\\w+).git")
+	repoRegex := regexp.MustCompile("\\S*\\/(\\S+)\\/(\\S+)\\.git")
 	matches := repoRegex.FindStringSubmatch(origin)
 	org := matches[1]
-	repoName := matches[2]
+	var repoName = matches[2]
+	// remove trailing slash
+	repoName = strings.ReplaceAll(repoName, "/", "")
 
 	home, _ := os.UserHomeDir()
 	repoPath := fmt.Sprintf("%s/Projects/github/%s/%s", home, org, repoName)
