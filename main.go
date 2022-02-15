@@ -27,7 +27,7 @@ func main() {
 	repoName = strings.ReplaceAll(repoName, "/", "")
 
 	home, _ := os.UserHomeDir()
-	repoPath := fmt.Sprintf("%s/Projects/github/%s/%s", home, org, repoName)
+	repoPath := fmt.Sprintf("%s/Projects/%s/%s", home, org, repoName)
 
 	fmt.Printf("Cloning repo %s into %s\n", origin, repoPath)
 	stdOut, _, err := gh.Exec("repo", "clone", fmt.Sprintf("%s/%s", org, repoName), repoPath)
